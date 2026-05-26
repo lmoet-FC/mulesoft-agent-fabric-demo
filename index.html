@@ -5,27 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MuleSoft Agent Fabric — Interactive Demo</title>
   <style>
-    /* ─── Reset & Tokens ──────────────────────────────────────────── */
+    /* ─── Reset & Tokens ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0d1117;
-      --surface:   #161b22;
-      --surface2:  #1c2230;
-      --border:    #30363d;
-      --text:      #e6edf3;
-      --muted:     #8b949e;
-      --primary:   #00c2ff;
-      --purple:    #a371f7;
-      --green:     #3fb950;
-      --yellow:    #e3b341;
-      --red:       #f85149;
-      --orange:    #f0883e;
-      --glow-blue: rgba(0,194,255,.35);
-      --glow-green:rgba(63,185,80,.35);
-      --glow-purp: rgba(163,113,247,.35);
-      --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-      --radius:    10px;
+      --bg:         #f6f8fa;
+      --surface:    #ffffff;
+      --surface2:   #f0f4f8;
+      --border:     #d0d7de;
+      --border2:    #e4e9ef;
+      --text:       #1f2328;
+      --muted:      #57606a;
+      --muted2:     #8c959f;
+      --primary:    #0969da;
+      --primary-bg: #dbeafe;
+      --purple:     #8250df;
+      --green:      #1a7f37;
+      --green-bg:   #dcfce7;
+      --yellow:     #9a6700;
+      --red:        #cf222e;
+      --orange:     #bc4c00;
+      --glow-blue:  rgba(9,105,218,.18);
+      --glow-green: rgba(26,127,55,.18);
+      --font-mono:  'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      --radius:     10px;
+      --shadow-sm:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:     0 3px 8px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
     }
 
     body {
@@ -36,15 +41,15 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 16px 48px;
+      padding: 28px 16px 52px;
     }
 
     /* ─── Header ─────────────────────────────────────────────────── */
     header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       width: 100%;
-      max-width: 1280px;
+      max-width: 1300px;
     }
 
     .logo-row {
@@ -52,23 +57,24 @@
       align-items: center;
       justify-content: center;
       gap: 14px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .logo-badge {
-      background: linear-gradient(135deg, #00c2ff 0%, #0066ff 100%);
+      background: linear-gradient(135deg, #0969da 0%, #0550ae 100%);
       border-radius: 12px;
-      width: 48px; height: 48px;
+      width: 44px; height: 44px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 26px;
-      box-shadow: 0 0 20px rgba(0,130,255,.5);
+      font-size: 22px;
+      box-shadow: 0 2px 12px rgba(9,105,218,.35);
+      flex-shrink: 0;
     }
 
     h1 {
-      font-size: clamp(22px, 4vw, 34px);
+      font-size: clamp(22px, 3.5vw, 32px);
       font-weight: 700;
       letter-spacing: -0.5px;
-      background: linear-gradient(90deg, #00c2ff, #a371f7);
+      background: linear-gradient(90deg, #0969da, #8250df);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -76,17 +82,18 @@
 
     .subtitle {
       color: var(--muted);
-      font-size: 15px;
-      margin-top: 6px;
+      font-size: 14px;
+      margin-top: 4px;
     }
 
     /* ─── Main Layout ─────────────────────────────────────────────── */
     .layout {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 310px 1fr;
       gap: 20px;
       width: 100%;
-      max-width: 1280px;
+      max-width: 1300px;
+      align-items: start;
     }
 
     @media (max-width: 860px) {
@@ -98,15 +105,16 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
     }
 
     .card-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: var(--muted);
+      letter-spacing: 1.1px;
+      color: var(--muted2);
       margin-bottom: 14px;
     }
 
@@ -114,18 +122,23 @@
     .deal-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13.5px;
-      margin-bottom: 18px;
+      font-size: 13px;
+      margin-bottom: 16px;
     }
 
     .deal-table td {
       padding: 7px 0;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border2);
+      vertical-align: middle;
     }
 
     .deal-table td:first-child {
       color: var(--muted);
-      width: 52%;
+      width: 50%;
+    }
+
+    .deal-table td:last-child {
+      font-weight: 500;
     }
 
     .deal-table tr:last-child td { border-bottom: none; }
@@ -133,97 +146,100 @@
     .discount-val {
       color: var(--red);
       font-weight: 700;
-      font-size: 15px;
     }
 
     .policy-badge {
-      display: inline-block;
-      background: rgba(248,81,73,.15);
-      border: 1px solid rgba(248,81,73,.4);
+      display: inline-flex;
+      align-items: center;
+      background: rgba(207,34,46,.08);
+      border: 1px solid rgba(207,34,46,.25);
       color: var(--red);
       border-radius: 4px;
-      padding: 2px 7px;
+      padding: 1px 6px;
       font-size: 11px;
       font-weight: 600;
+      margin-left: 4px;
     }
 
     /* ─── Submit Button ──────────────────────────────────────────── */
     .btn-submit {
       width: 100%;
-      padding: 14px;
+      padding: 12px;
       border: none;
       border-radius: var(--radius);
-      background: linear-gradient(135deg, #00c2ff 0%, #0062e6 100%);
+      background: linear-gradient(135deg, #0969da 0%, #0550ae 100%);
       color: #fff;
-      font-weight: 700;
-      font-size: 15px;
+      font-weight: 600;
+      font-size: 14px;
       cursor: pointer;
-      transition: opacity .2s, transform .15s;
+      transition: opacity .2s, transform .15s, box-shadow .2s;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 20px rgba(0,130,255,.35);
+      box-shadow: 0 2px 8px rgba(9,105,218,.3);
     }
 
-    .btn-submit:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
+    .btn-submit:hover:not(:disabled) {
+      opacity: .92;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(9,105,218,.38);
+    }
     .btn-submit:disabled { opacity: .45; cursor: not-allowed; transform: none; }
 
     /* ─── Phase progress ─────────────────────────────────────────── */
-    .phase-track {
-      margin: 18px 0 0;
-    }
+    .phase-track { margin: 14px 0 0; }
 
     .phase-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 7px 0;
-      font-size: 13px;
+      padding: 6px 0;
+      font-size: 12.5px;
       color: var(--muted);
       transition: color .3s;
     }
 
-    .phase-item.done { color: var(--green); }
+    .phase-item.done  { color: var(--green); }
     .phase-item.active { color: var(--primary); }
 
     .phase-dot {
-      width: 10px; height: 10px;
+      width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--border);
       flex-shrink: 0;
       transition: background .3s, box-shadow .3s;
     }
 
-    .phase-item.done .phase-dot { background: var(--green); }
+    .phase-item.done .phase-dot   { background: var(--green); }
     .phase-item.active .phase-dot {
       background: var(--primary);
-      box-shadow: 0 0 8px var(--primary);
+      box-shadow: 0 0 0 3px rgba(9,105,218,.2);
       animation: pulse 1s infinite;
     }
 
     @keyframes pulse {
       0%,100% { transform: scale(1); }
-      50%       { transform: scale(1.5); }
+      50%       { transform: scale(1.45); }
     }
 
     /* ─── Result Banner ──────────────────────────────────────────── */
     .result-banner {
-      margin-top: 18px;
-      padding: 14px 16px;
+      margin-top: 14px;
+      padding: 12px 14px;
       border-radius: var(--radius);
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
       display: none;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .result-banner.show { display: flex; }
 
     .result-banner.approved {
-      background: rgba(63,185,80,.12);
-      border: 1px solid rgba(63,185,80,.4);
+      background: var(--green-bg);
+      border: 1px solid rgba(26,127,55,.3);
       color: var(--green);
     }
 
@@ -231,7 +247,7 @@
     .arch-wrap {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .arch-canvas {
@@ -240,22 +256,19 @@
       border-radius: var(--radius);
       overflow: hidden;
       position: relative;
-      height: 480px;
+      box-shadow: var(--shadow-sm);
     }
 
     svg.arch-svg {
+      display: block;
       width: 100%;
-      height: 100%;
-      overflow: visible;
+      height: auto;
     }
 
-    /* nodes */
-    .arch-node {
-      transition: all .35s ease;
-    }
+    /* ─── SVG Node styles ─────────────────────────────────────────── */
+    .arch-node { transition: all .35s ease; }
 
     .arch-node rect {
-      rx: 8; ry: 8;
       fill: var(--surface2);
       stroke: var(--border);
       stroke-width: 1.5;
@@ -265,41 +278,37 @@
     .arch-node text {
       fill: var(--muted);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
       transition: fill .35s;
     }
 
-    .arch-node text.icon { font-size: 18px; }
-    .arch-node text.label { font-weight: 700; font-size: 12.5px; }
-    .arch-node text.sub { font-size: 10.5px; fill: var(--muted); }
+    .arch-node text.icon  { font-size: 16px; }
+    .arch-node text.label { font-weight: 600; font-size: 12px; }
+    .arch-node text.sub   { font-size: 10.5px; fill: var(--muted2); }
 
-    /* active state */
+    /* active */
     .arch-node.active rect {
-      fill: #0d2136;
+      fill: var(--primary-bg);
       stroke: var(--primary);
-      stroke-width: 2.5;
-      filter: drop-shadow(0 0 10px var(--glow-blue));
+      stroke-width: 2;
+      filter: drop-shadow(0 0 8px var(--glow-blue));
     }
-
     .arch-node.active text.label { fill: var(--primary); }
 
-    /* success state */
+    /* success */
     .arch-node.success rect {
-      fill: #0a1f14;
+      fill: var(--green-bg);
       stroke: var(--green);
-      stroke-width: 2.5;
-      filter: drop-shadow(0 0 10px var(--glow-green));
+      stroke-width: 2;
+      filter: drop-shadow(0 0 8px var(--glow-green));
     }
-
     .arch-node.success text.label { fill: var(--green); }
 
-    /* fabric broker box */
+    /* fabric bounding box */
     .fabric-box rect.fabric-bg {
-      fill: rgba(163,113,247,.06);
-      stroke: rgba(163,113,247,.35);
+      fill: rgba(130,80,223,.04);
+      stroke: rgba(130,80,223,.28);
       stroke-width: 1.5;
-      stroke-dasharray: 6 3;
-      rx: 10; ry: 10;
+      stroke-dasharray: 7 4;
     }
 
     .fabric-label {
@@ -307,61 +316,62 @@
       font-size: 10px;
       fill: var(--purple);
       font-weight: 700;
-      letter-spacing: 1.4px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
-    /* animated path */
+    /* animated paths */
     .flow-path {
       fill: none;
       stroke: var(--border);
       stroke-width: 1.5;
-      stroke-dasharray: 6 4;
+      stroke-dasharray: 5 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .flow-path.active-path {
       stroke: var(--primary);
       stroke-dasharray: none;
       stroke-width: 2;
-      animation: drawPath 0.6s ease forwards;
     }
 
     .flow-path.success-path {
       stroke: var(--green);
-      stroke-width: 2.5;
+      stroke-width: 2;
       stroke-dasharray: none;
-      filter: drop-shadow(0 0 4px var(--glow-green));
+      filter: drop-shadow(0 0 3px var(--glow-green));
     }
 
-    /* packet dot travelling along a path */
+    /* packet dot */
     .packet {
-      r: 5;
+      r: 4.5;
       fill: var(--primary);
-      filter: drop-shadow(0 0 6px var(--primary));
+      filter: drop-shadow(0 0 5px rgba(9,105,218,.6));
       display: none;
     }
-
-    .packet.green { fill: var(--green); filter: drop-shadow(0 0 6px var(--green)); }
+    .packet.green { fill: var(--green); filter: drop-shadow(0 0 5px rgba(26,127,55,.6)); }
 
     /* ─── Console ─────────────────────────────────────────────────── */
     .console {
-      background: #0a0f14;
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px 16px;
-      height: 200px;
+      padding: 13px 15px;
+      height: 190px;
       overflow-y: auto;
       font-family: var(--font-mono);
-      font-size: 12.5px;
-      line-height: 1.6;
+      font-size: 12px;
+      line-height: 1.65;
+      box-shadow: var(--shadow-sm);
     }
 
-    .console::-webkit-scrollbar { width: 6px; }
+    .console::-webkit-scrollbar { width: 5px; }
     .console::-webkit-scrollbar-track { background: transparent; }
     .console::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-    .log { padding: 2px 0; }
-    .log .ts { color: #4b5563; margin-right: 6px; }
+    .log { padding: 1px 0; }
+    .log .ts  { color: var(--muted2); margin-right: 8px; }
     .log.info  .msg { color: var(--primary); }
     .log.proc  .msg { color: var(--yellow); }
     .log.ok    .msg { color: var(--green); }
@@ -371,11 +381,12 @@
 
     .blinking-cursor {
       display: inline-block;
-      width: 7px; height: 14px;
+      width: 6px; height: 13px;
       background: var(--primary);
       animation: blink 1s step-end infinite;
       vertical-align: middle;
       margin-left: 2px;
+      border-radius: 1px;
     }
 
     @keyframes blink { 50% { opacity: 0; } }
@@ -401,12 +412,12 @@
       <div class="card-title">Deal Context — Trigger</div>
       <table class="deal-table">
         <tr><td>CRM Object</td><td>Salesforce Opportunity</td></tr>
-        <tr><td>Account</td><td><strong>Acme Global Corp</strong></td></tr>
-        <tr><td>Deal Value</td><td><strong>$250,000 USD</strong></td></tr>
+        <tr><td>Account</td><td>Acme Global Corp</td></tr>
+        <tr><td>Deal Value</td><td>$250,000 USD</td></tr>
         <tr><td>Requested Discount</td>
             <td><span class="discount-val">25% ($62,500)</span></td></tr>
         <tr><td>Policy Limit</td>
-            <td>15% &nbsp;<span class="policy-badge">Requires Approval</span></td></tr>
+            <td>15%<span class="policy-badge">Requires Approval</span></td></tr>
         <tr><td>Sales Rep</td><td>Jordan Lee</td></tr>
         <tr><td>Tier</td><td>Enterprise — Tier 1</td></tr>
       </table>
@@ -439,153 +450,204 @@
   <!-- Right panel -->
   <div class="arch-wrap">
 
-    <!-- SVG canvas -->
+    <!-- SVG canvas — top-down flow -->
     <div class="arch-canvas">
-      <svg class="arch-svg" id="archSvg" viewBox="0 0 820 480" preserveAspectRatio="xMidYMid meet">
+      <!--
+        ViewBox: 920 × 690
+        Layout (top → bottom):
+          Row 1 (y≈50):  Salesforce CRM [trigger]
+          Row 2 (y≈152): Ingress
+          Row 3 (y≈255): Agent Broker Orchestrator          ← Agent Fabric boundary
+          Row 4 (y≈382): MCP-SF Query (left) · A2A (right)
+          Row 5 (y≈467): OpenAI LLM (left) · Claude (right)
+          Row 6 (y≈555): Egress
+          Row 7 (y≈635): MCP-SF Update
+          Return dashed line wraps right-side back to CRM
+      -->
+      <svg class="arch-svg" id="archSvg"
+           viewBox="0 0 920 690"
+           preserveAspectRatio="xMidYMid meet"
+           xmlns="http://www.w3.org/2000/svg">
+
         <defs>
-          <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#00c2ff"/>
+          <marker id="arrowBlue"  markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="#0969da"/>
           </marker>
-          <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+          <marker id="arrowGreen" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="#1a7f37"/>
           </marker>
-          <marker id="arrowGray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#30363d"/>
+          <marker id="arrowGray"  markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="#d0d7de"/>
           </marker>
-          <filter id="glowBlue">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
         </defs>
 
-        <!-- ── Fabric bounding box ── -->
+        <!-- ── Agent Fabric boundary box ── -->
         <g class="fabric-box">
-          <rect class="fabric-bg" x="220" y="60" width="390" height="360"/>
-          <text class="fabric-label" x="234" y="80">Agent Fabric</text>
+          <rect class="fabric-bg" x="48" y="108" width="824" height="566" rx="12"/>
+          <text class="fabric-label" x="62" y="126">Agent Fabric</text>
         </g>
 
-        <!-- ── Static connector paths (drawn first so nodes sit on top) ── -->
-        <!-- CRM → Ingress -->
-        <path id="p-req-ing"    class="flow-path" d="M 138 240 L 265 240"      marker-end="url(#arrowGray)"/>
-        <!-- Ingress → Broker -->
-        <path id="p-ing-brk"    class="flow-path" d="M 310 210 L 390 210"      marker-end="url(#arrowGray)"/>
-        <!-- Broker → LLM -->
-        <path id="p-brk-llm"    class="flow-path" d="M 390 220 L 390 310 L 310 310" marker-end="url(#arrowGray)"/>
-        <!-- Broker → SF-Query -->
-        <path id="p-brk-sfq"    class="flow-path" d="M 390 225 L 390 380 L 100 380" marker-end="url(#arrowGray)"/>
-        <!-- SF-Query → LLM -->
-        <path id="p-sfq-llm"    class="flow-path" d="M 165 350 L 165 325"      marker-end="url(#arrowGray)"/>
-        <!-- Broker → A2A -->
-        <path id="p-brk-a2a"    class="flow-path" d="M 440 185 L 540 185 L 540 160" marker-end="url(#arrowGray)"/>
-        <!-- A2A → Claude -->
-        <path id="p-a2a-cld"    class="flow-path" d="M 600 160 L 680 160"      marker-end="url(#arrowGray)"/>
-        <!-- Broker → Egress -->
-        <path id="p-brk-egr"    class="flow-path" d="M 440 240 L 530 240"      marker-end="url(#arrowGray)"/>
-        <!-- Egress → SF-Update -->
-        <path id="p-egr-sfu"    class="flow-path" d="M 580 265 L 580 340 L 690 340" marker-end="url(#arrowGray)"/>
-        <!-- SF-Update → CRM (return) -->
-        <path id="p-sfu-crm"    class="flow-path" d="M 755 320 L 755 240 L 680 240" marker-end="url(#arrowGray)"/>
+        <!-- ═══════════════════════════════════════════
+             CONNECTOR PATHS  (drawn before nodes)
+             ═══════════════════════════════════════ -->
 
-        <!-- ── Nodes ── -->
+        <!-- CRM → Ingress (straight down) -->
+        <path id="p-crm-ing" class="flow-path"
+              d="M460,83 V120"
+              marker-end="url(#arrowGray)"/>
 
-        <!-- CRM / Request -->
-        <g id="n-crm" class="arch-node" transform="translate(20,205)">
-          <rect width="120" height="70" rx="8"/>
-          <text class="icon" x="60" y="26" text-anchor="middle">☁️</text>
-          <text class="label" x="60" y="46" text-anchor="middle">Salesforce CRM</text>
-          <text class="sub"  x="60" y="62" text-anchor="middle">Opportunity trigger</text>
+        <!-- Ingress → Broker (straight down) -->
+        <path id="p-ing-brk" class="flow-path"
+              d="M460,185 V220"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- Broker left → MCP-SF Query (left elbow) -->
+        <path id="p-brk-sfq" class="flow-path"
+              d="M430,255 H154 V350"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- Broker right → A2A (right elbow) -->
+        <path id="p-brk-a2a" class="flow-path"
+              d="M670,255 H766 V350"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- MCP-SF Query → OpenAI LLM (straight down) -->
+        <path id="p-sfq-llm" class="flow-path"
+              d="M154,415 V435"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- A2A → Claude Agent (straight down) -->
+        <path id="p-a2a-cld" class="flow-path"
+              d="M766,415 V435"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- LLM → Egress (right then down to Egress left edge) -->
+        <path id="p-llm-egr" class="flow-path"
+              d="M237,467 H380 V525"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- Claude → Egress (left then down to Egress right edge) -->
+        <path id="p-cld-egr" class="flow-path"
+              d="M683,467 H540 V525"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- Egress → MCP-SF Update (straight down) -->
+        <path id="p-egr-sfu" class="flow-path"
+              d="M460,585 V605"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- MCP-SF Update → CRM return (dashed wrap-around right side) -->
+        <path id="p-sfu-crm" class="flow-path"
+              d="M550,635 H900 V50 H550"
+              stroke-dasharray="5 5"
+              marker-end="url(#arrowGray)"/>
+
+        <!-- ═══════════════════════════════════════════
+             NODES
+             ═══════════════════════════════════════ -->
+
+        <!-- Row 1: Salesforce CRM (trigger) — center -->
+        <g id="n-crm" class="arch-node" transform="translate(370,18)">
+          <rect width="180" height="65" rx="9"/>
+          <text class="icon"  x="90" y="24" text-anchor="middle">☁️</text>
+          <text class="label" x="90" y="42" text-anchor="middle">Salesforce CRM</text>
+          <text class="sub"   x="90" y="57" text-anchor="middle">Opportunity trigger</text>
         </g>
 
-        <!-- Ingress -->
-        <g id="n-ing" class="arch-node" transform="translate(256,205)">
-          <rect width="90" height="70" rx="8"/>
-          <text class="icon" x="45" y="26" text-anchor="middle">📥</text>
-          <text class="label" x="45" y="46" text-anchor="middle">Ingress</text>
-          <text class="sub"  x="45" y="62" text-anchor="middle">Auth &amp; validate</text>
+        <!-- Row 2: Ingress — center -->
+        <g id="n-ing" class="arch-node" transform="translate(380,120)">
+          <rect width="160" height="65" rx="9"/>
+          <text class="icon"  x="80" y="24" text-anchor="middle">📥</text>
+          <text class="label" x="80" y="42" text-anchor="middle">Ingress</text>
+          <text class="sub"   x="80" y="57" text-anchor="middle">Auth &amp; validate</text>
         </g>
 
-        <!-- Agent Broker -->
-        <g id="n-brk" class="arch-node" transform="translate(355,195)">
-          <rect width="120" height="80" rx="8"/>
-          <text class="icon" x="60" y="28" text-anchor="middle">🤖</text>
-          <text class="label" x="60" y="50" text-anchor="middle">Agent Broker</text>
-          <text class="sub"  x="60" y="66" text-anchor="middle">Orchestrator</text>
+        <!-- Row 3: Agent Broker — center, wide -->
+        <g id="n-brk" class="arch-node" transform="translate(340,220)">
+          <rect width="240" height="70" rx="9"/>
+          <text class="icon"  x="120" y="25" text-anchor="middle">🤖</text>
+          <text class="label" x="120" y="44" text-anchor="middle">Agent Broker</text>
+          <text class="sub"   x="120" y="59" text-anchor="middle">Orchestrator</text>
         </g>
 
-        <!-- Egress -->
-        <g id="n-egr" class="arch-node" transform="translate(530,205)">
-          <rect width="90" height="70" rx="8"/>
-          <text class="icon" x="45" y="26" text-anchor="middle">📤</text>
-          <text class="label" x="45" y="46" text-anchor="middle">Egress</text>
-          <text class="sub"  x="45" y="62" text-anchor="middle">Green path</text>
+        <!-- Row 4 left: MCP-Salesforce Query -->
+        <g id="n-sfq" class="arch-node" transform="translate(72,350)">
+          <rect width="165" height="65" rx="9"/>
+          <text class="icon"  x="82" y="24" text-anchor="middle">🔍</text>
+          <text class="label" x="82" y="42" text-anchor="middle">MCP-Salesforce</text>
+          <text class="sub"   x="82" y="57" text-anchor="middle">Query Objects</text>
         </g>
 
-        <!-- MCP-Salesforce Query -->
-        <g id="n-sfq" class="arch-node" transform="translate(80,345)">
-          <rect width="160" height="70" rx="8"/>
-          <text class="icon" x="80" y="26" text-anchor="middle">🔍</text>
-          <text class="label" x="80" y="46" text-anchor="middle">MCP-Salesforce</text>
-          <text class="sub"  x="80" y="62" text-anchor="middle">Query Objects</text>
+        <!-- Row 4 right: A2A — Agentforce -->
+        <g id="n-a2a" class="arch-node" transform="translate(683,350)">
+          <rect width="165" height="65" rx="9"/>
+          <text class="icon"  x="82" y="24" text-anchor="middle">⚡</text>
+          <text class="label" x="82" y="42" text-anchor="middle">A2A — Agentforce</text>
+          <text class="sub"   x="82" y="57" text-anchor="middle">Sub-agents</text>
         </g>
 
-        <!-- OpenAI LLM -->
-        <g id="n-llm" class="arch-node" transform="translate(230,280)">
-          <rect width="145" height="75" rx="8"/>
-          <text class="icon" x="72" y="28" text-anchor="middle">🧠</text>
-          <text class="label" x="72" y="50" text-anchor="middle">OpenAI LLM</text>
-          <text class="sub"  x="72" y="66" text-anchor="middle">Reasoning loop</text>
+        <!-- Row 5 left: OpenAI LLM -->
+        <g id="n-llm" class="arch-node" transform="translate(72,435)">
+          <rect width="165" height="65" rx="9"/>
+          <text class="icon"  x="82" y="24" text-anchor="middle">🧠</text>
+          <text class="label" x="82" y="42" text-anchor="middle">OpenAI LLM</text>
+          <text class="sub"   x="82" y="57" text-anchor="middle">Reasoning loop</text>
         </g>
 
-        <!-- A2A Agentforce -->
-        <g id="n-a2a" class="arch-node" transform="translate(490,90)">
-          <rect width="150" height="70" rx="8"/>
-          <text class="icon" x="75" y="26" text-anchor="middle">⚡</text>
-          <text class="label" x="75" y="46" text-anchor="middle">A2A — Agentforce</text>
-          <text class="sub"  x="75" y="62" text-anchor="middle">Sub-agents</text>
+        <!-- Row 5 right: Claude Agent -->
+        <g id="n-cld" class="arch-node" transform="translate(683,435)">
+          <rect width="165" height="65" rx="9"/>
+          <text class="icon"  x="82" y="24" text-anchor="middle">🟠</text>
+          <text class="label" x="82" y="42" text-anchor="middle">Claude Agent</text>
+          <text class="sub"   x="82" y="57" text-anchor="middle">Edge case check</text>
         </g>
 
-        <!-- Claude Agent -->
-        <g id="n-cld" class="arch-node" transform="translate(665,90)">
-          <rect width="130" height="70" rx="8"/>
-          <text class="icon" x="65" y="26" text-anchor="middle">🟠</text>
-          <text class="label" x="65" y="46" text-anchor="middle">Claude Agent</text>
-          <text class="sub"  x="65" y="62" text-anchor="middle">Edge case check</text>
+        <!-- Row 6: Egress — center -->
+        <g id="n-egr" class="arch-node" transform="translate(380,525)">
+          <rect width="160" height="60" rx="9"/>
+          <text class="icon"  x="80" y="22" text-anchor="middle">📤</text>
+          <text class="label" x="80" y="40" text-anchor="middle">Egress</text>
+          <text class="sub"   x="80" y="54" text-anchor="middle">Green path</text>
         </g>
 
-        <!-- MCP-Salesforce Update -->
-        <g id="n-sfu" class="arch-node" transform="translate(665,305)">
-          <rect width="160" height="70" rx="8"/>
-          <text class="icon" x="80" y="26" text-anchor="middle">📝</text>
-          <text class="label" x="80" y="46" text-anchor="middle">MCP-Salesforce</text>
-          <text class="sub"  x="80" y="62" text-anchor="middle">Update Objects ✓</text>
+        <!-- Row 7: MCP-Salesforce Update — center -->
+        <g id="n-sfu" class="arch-node" transform="translate(370,605)">
+          <rect width="180" height="60" rx="9"/>
+          <text class="icon"  x="90" y="22" text-anchor="middle">📝</text>
+          <text class="label" x="90" y="40" text-anchor="middle">MCP-Salesforce</text>
+          <text class="sub"   x="90" y="54" text-anchor="middle">Update Objects ✓</text>
         </g>
 
-        <!-- Travelling packet dots (hidden until animated) -->
+        <!-- Travelling packet dots -->
         <circle id="pkt-1" class="packet" cx="0" cy="0"/>
         <circle id="pkt-2" class="packet" cx="0" cy="0"/>
 
       </svg>
-    </div>
+    </div><!-- /arch-canvas -->
 
     <!-- Console -->
     <div class="console" id="console">
-      <div class="log dim"><span class="ts">00:00:00</span><span class="msg">Agent Fabric ready. Awaiting deal submission…</span> <span class="blinking-cursor"></span></div>
+      <div class="log dim">
+        <span class="ts">00:00:00</span>
+        <span class="msg">Agent Fabric ready. Awaiting deal submission…</span>
+        <span class="blinking-cursor"></span>
+      </div>
     </div>
 
-  </div>
-</div>
+  </div><!-- /arch-wrap -->
+</div><!-- /layout -->
 
 <script>
-/* ──────────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────────────────
    Helpers
 ───────────────────────────────────────────────────────────────── */
 const $ = id => document.getElementById(id);
 
 function now() {
-  return new Date().toLocaleTimeString('en-GB', {hour12: false});
+  return new Date().toLocaleTimeString('en-GB', { hour12: false });
 }
 
-function log(msg, type='info') {
+function log(msg, type = 'info') {
   const c = $('console');
   const el = document.createElement('div');
   el.className = `log ${type}`;
@@ -606,18 +668,17 @@ function pathState(id, state) {
   if (!p) return;
   p.classList.remove('active-path', 'success-path');
   if (state) p.classList.add(state);
-  // update marker
-  if (state === 'active-path')  p.setAttribute('marker-end','url(#arrowBlue)');
-  else if (state === 'success-path') p.setAttribute('marker-end','url(#arrowGreen)');
-  else p.setAttribute('marker-end','url(#arrowGray)');
+  if (state === 'active-path')        p.setAttribute('marker-end', 'url(#arrowBlue)');
+  else if (state === 'success-path')  p.setAttribute('marker-end', 'url(#arrowGreen)');
+  else                                p.setAttribute('marker-end', 'url(#arrowGray)');
 }
 
-function phase(idx, state='active') {
+function phase(idx, state = 'active') {
   for (let i = 0; i < 8; i++) {
     const el = $(`ph-${i}`);
     if (!el) continue;
     el.classList.remove('active', 'done');
-    if (i < idx) el.classList.add('done');
+    if (i < idx)       el.classList.add('done');
     else if (i === idx) el.classList.add(state);
   }
 }
@@ -629,8 +690,8 @@ function allPhasesDone() {
   }
 }
 
-/* travel a packet dot along an SVG path */
-function animatePacket(pktId, pathId, durationMs, color='blue') {
+/* Animate a packet dot travelling along an SVG path */
+function animatePacket(pktId, pathId, durationMs, color = 'blue') {
   return new Promise(resolve => {
     const pkt  = $(pktId);
     const path = $(pathId);
@@ -640,19 +701,15 @@ function animatePacket(pktId, pathId, durationMs, color='blue') {
     if (color === 'green') pkt.classList.add('green');
     pkt.style.display = 'block';
 
-    const len  = path.getTotalLength();
-    const fps  = 60;
+    const len   = path.getTotalLength();
+    const fps   = 60;
     const steps = Math.round(durationMs / (1000 / fps));
-    let frame  = 0;
+    let   frame = 0;
 
     function tick() {
       frame++;
       const t = frame / steps;
-      if (t >= 1) {
-        pkt.style.display = 'none';
-        resolve();
-        return;
-      }
+      if (t >= 1) { pkt.style.display = 'none'; resolve(); return; }
       const pt = path.getPointAtLength(t * len);
       pkt.setAttribute('cx', pt.x);
       pkt.setAttribute('cy', pt.y);
@@ -664,131 +721,135 @@ function animatePacket(pktId, pathId, durationMs, color='blue') {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-/* ──────────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────────────────
    Simulation
 ───────────────────────────────────────────────────────────────── */
+const ALL_PATHS  = ['p-crm-ing','p-ing-brk','p-brk-sfq','p-sfq-llm',
+                    'p-brk-a2a','p-a2a-cld','p-llm-egr','p-cld-egr',
+                    'p-egr-sfu','p-sfu-crm'];
+const ALL_NODES  = ['n-crm','n-ing','n-brk','n-sfq','n-llm',
+                    'n-a2a','n-cld','n-egr','n-sfu'];
+
 async function startSimulation() {
   const btn = $('runBtn');
   btn.disabled = true;
 
-  // reset
+  // ── Reset ──────────────────────────────────────────
   $('console').innerHTML = '';
-  $('resultBanner').classList.remove('show');
-  ['n-crm','n-ing','n-brk','n-egr','n-sfq','n-llm','n-a2a','n-cld','n-sfu'].forEach(id => nodeState(id, null));
-  ['p-req-ing','p-ing-brk','p-brk-llm','p-brk-sfq','p-sfq-llm','p-brk-a2a',
-   'p-a2a-cld','p-brk-egr','p-egr-sfu','p-sfu-crm'].forEach(id => pathState(id, null));
+  $('resultBanner').classList.remove('show', 'approved');
+  ALL_NODES.forEach(id => nodeState(id, null));
+  ALL_PATHS.forEach(id => pathState(id, null));
   phase(-1);
 
-  // ── Step 0: CRM trigger ──────────────────────────
-  await sleep(400);
+  // ── Step 0: CRM trigger ────────────────────────────
+  await sleep(350);
   phase(0, 'active');
   nodeState('n-crm', 'active');
-  log('🚀 Sales rep Jordan Lee submitted a 25 % discount request for Acme Global Corp ($250 k deal).', 'info');
-  await sleep(900);
+  log('🚀 Jordan Lee submitted a 25% discount request for Acme Global Corp ($250k deal).', 'info');
+  await sleep(850);
 
-  // ── Step 1: Ingress ──────────────────────────────
+  // ── Step 1: Ingress ────────────────────────────────
   phase(1);
-  pathState('p-req-ing', 'active-path');
-  await animatePacket('pkt-1', 'p-req-ing', 600);
+  pathState('p-crm-ing', 'active-path');
+  await animatePacket('pkt-1', 'p-crm-ing', 550);
   nodeState('n-crm', null);
   nodeState('n-ing', 'active');
-  log('📥 Ingress: Payload received. Authenticating session — mTLS handshake OK.', 'info');
-  await sleep(800);
-  log('   Payload validated. Discount delta: +10 pp above policy ceiling.', 'dim');
-  await sleep(600);
+  log('📥 Ingress: Payload received. mTLS handshake OK.', 'info');
+  await sleep(700);
+  log('   Payload validated — discount delta +10 pp above policy ceiling.', 'dim');
+  await sleep(550);
 
-  // ── Step 2: Broker ───────────────────────────────
+  // ── Step 2: Broker ─────────────────────────────────
   phase(2);
   pathState('p-ing-brk', 'active-path');
-  await animatePacket('pkt-1', 'p-ing-brk', 500);
+  await animatePacket('pkt-1', 'p-ing-brk', 480);
   nodeState('n-ing', null);
   nodeState('n-brk', 'active');
   log('🤖 Agent Broker activated. Resolving dependency graph for discount-approval workflow.', 'proc');
-  await sleep(700);
-  log('   Tools required: [MCP-Salesforce:Query] → [LLM:Reason] → [A2A:cross-check] → [MCP-Salesforce:Update]', 'dim');
-  await sleep(800);
+  await sleep(650);
+  log('   Tools: [MCP-SF:Query] → [LLM:Reason] → [A2A:cross-check] → [MCP-SF:Update]', 'dim');
+  await sleep(750);
 
-  // ── Step 3: MCP-Salesforce Query ─────────────────
+  // ── Step 3: MCP-Salesforce Query ───────────────────
   phase(3);
   pathState('p-brk-sfq', 'active-path');
-  await animatePacket('pkt-1', 'p-brk-sfq', 900);
+  await animatePacket('pkt-1', 'p-brk-sfq', 850);
   nodeState('n-sfq', 'active');
   log('🔍 [MCP-Salesforce] Querying account lifecycle data…', 'proc');
-  await sleep(600);
-  log('   → Lifetime value: $2.4 M | Contract length: 4 yrs | Retention: 98 %', 'dim');
-  await sleep(500);
-  log('   → Historical margin at 25 % discount for Tier-1 accounts: 62 % avg.', 'dim');
-  await sleep(700);
+  await sleep(550);
+  log('   → Lifetime value: $2.4M  |  Contract: 4 yrs  |  Retention: 98%', 'dim');
+  await sleep(450);
+  log('   → Historical margin at 25% discount for Tier-1 accounts: 62% avg.', 'dim');
+  await sleep(650);
 
-  // ── Step 4: LLM Reasoning ────────────────────────
+  // ── Step 4: LLM Reasoning ──────────────────────────
   phase(4);
   pathState('p-sfq-llm', 'active-path');
-  await animatePacket('pkt-1', 'p-sfq-llm', 500);
-  pathState('p-brk-llm', 'active-path');
+  await animatePacket('pkt-1', 'p-sfq-llm', 380);
   nodeState('n-sfq', null);
   nodeState('n-llm', 'active');
   log('🧠 Routing enriched context to OpenAI LLM reasoning loop…', 'ai');
-  await sleep(900);
+  await sleep(850);
   log('   LLM turn 1 — evaluating risk profile and margin impact…', 'ai');
-  await sleep(1000);
+  await sleep(950);
   log('   LLM turn 2 — checking policy exceptions for Tier-1 strategic accounts…', 'ai');
-  await sleep(1000);
-  log('   LLM conclusion: "Acme Global is a strategic Tier-1 customer. 25 % discount maintains healthy margin and strengthens renewal. Exception justified."', 'ok');
-  await sleep(700);
+  await sleep(950);
+  log('   LLM conclusion: "Acme is Tier-1 strategic. 25% discount maintains healthy margin. Exception justified."', 'ok');
+  await sleep(650);
 
-  // ── Step 5: A2A cross-check ──────────────────────
+  // ── Step 5: A2A cross-check ────────────────────────
   phase(5);
   pathState('p-brk-a2a', 'active-path');
-  await animatePacket('pkt-2', 'p-brk-a2a', 700);
-  nodeState('n-llm', null);
+  await animatePacket('pkt-2', 'p-brk-a2a', 680);
   nodeState('n-a2a', 'active');
   log('⚡ [A2A] Escalating to Agentforce sub-agents for executive availability check…', 'proc');
-  await sleep(600);
+  await sleep(550);
   pathState('p-a2a-cld', 'active-path');
-  await animatePacket('pkt-2', 'p-a2a-cld', 500);
+  await animatePacket('pkt-2', 'p-a2a-cld', 380);
   nodeState('n-cld', 'active');
   log('🟠 [Claude Agent] Cross-checking Slack for active CFO discussion threads… none found.', 'ai');
-  await sleep(800);
+  await sleep(750);
   log('   No blocking executive flag. Green light to proceed.', 'dim');
-  await sleep(500);
+  await sleep(450);
   nodeState('n-a2a', null);
   nodeState('n-cld', null);
 
-  // ── Step 6: Egress ───────────────────────────────
+  // ── Step 6: Egress ─────────────────────────────────
   phase(6);
-  pathState('p-brk-egr', 'active-path');
-  await animatePacket('pkt-1', 'p-brk-egr', 600);
-  nodeState('n-brk', null);
+  pathState('p-llm-egr', 'active-path');
+  pathState('p-cld-egr', 'active-path');
+  await animatePacket('pkt-1', 'p-llm-egr', 580);
+  nodeState('n-llm', null);
   nodeState('n-egr', 'active');
-  log('📤 Egress node — activating green path. Formulating Salesforce write actions.', 'info');
-  await sleep(700);
+  log('📤 Egress — activating green path. Formulating Salesforce write actions.', 'info');
+  await sleep(650);
 
-  // ── Step 7: Salesforce Update ────────────────────
+  // ── Step 7: Salesforce Update ──────────────────────
   phase(7);
   pathState('p-egr-sfu', 'active-path');
-  await animatePacket('pkt-1', 'p-egr-sfu', 700, 'green');
+  await animatePacket('pkt-1', 'p-egr-sfu', 420, 'green');
   nodeState('n-egr', null);
   nodeState('n-sfu', 'active');
   log('📝 [MCP-Salesforce] Updating Opportunity…', 'ok');
-  await sleep(500);
-  log('   Opportunity.Discount_Rate__c  → 25 %', 'ok');
-  await sleep(300);
+  await sleep(450);
+  log('   Opportunity.Discount_Rate__c  → 25%', 'ok');
+  await sleep(280);
   log('   Opportunity.Approval_Status__c → "Approved"', 'ok');
-  await sleep(300);
+  await sleep(280);
   log('   Chatter post: LLM justification logged for audit trail.', 'ok');
-  await sleep(700);
+  await sleep(650);
 
-  // ── Return path ─────────────────────────────────
+  // ── Return path + final success ────────────────────
   pathState('p-sfu-crm', 'success-path');
   nodeState('n-sfu', 'success');
   nodeState('n-crm', 'success');
 
-  // Mark all paths traversed as success
-  ['p-req-ing','p-ing-brk','p-brk-sfq','p-sfq-llm','p-brk-llm',
-   'p-brk-a2a','p-a2a-cld','p-brk-egr','p-egr-sfu'].forEach(id => pathState(id, 'success-path'));
+  ['p-crm-ing','p-ing-brk','p-brk-sfq','p-sfq-llm',
+   'p-brk-a2a','p-a2a-cld','p-llm-egr','p-cld-egr','p-egr-sfu']
+    .forEach(id => pathState(id, 'success-path'));
 
   allPhasesDone();
-  log('✅ Pipeline execution complete. Discount approved and Salesforce updated.', 'ok');
+  log('✅ Pipeline complete. Discount approved and Salesforce updated.', 'ok');
 
   const banner = $('resultBanner');
   banner.classList.add('show', 'approved');
